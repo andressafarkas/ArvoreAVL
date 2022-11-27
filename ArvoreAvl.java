@@ -1,10 +1,42 @@
 import java.util.ArrayList;
 
 public class ArvoreAvl {
+	protected No raiz;
 
-  protected No raiz;
+	public int size(){
+		return sizeAux(raiz);
+	}
 
-	public void inserir(int k) {
+	private int sizeAux(No node){
+	    if(node == null)
+            return 0;
+        else{
+			return (sizeAux(node.getEsquerda()) + 1 + sizeAux(node.getDireita()));
+		}
+	}
+
+	public void clear(){
+		clearAux(raiz);
+	}
+
+	private void clearAux(No node){
+		if(node == null)
+            return;
+		if(node.getEsquerda() == null && node.getDireita() == null){
+			removerNoEncontrado(node);
+			if(node.getPai() != null){
+				clearAux(node.getPai());
+			}
+		}
+		if(node.getEsquerda() != null){
+			clearAux(node.getEsquerda());
+		}
+		if(node.getDireita()!= null){
+			clearAux(node.getDireita());
+		}
+	}
+
+  	public void inserir(int k) {
 		No n = new No(k);
 		inserirAVL(this.raiz, n);
 	}
@@ -58,13 +90,13 @@ public class ArvoreAvl {
 		}
 	}
 
-	public void remover(int k) { // clear
+	public void remover(int k) {
 		removerAVL(this.raiz, k);
 	}
 
 	public void removerAVL(No atual, int k) {
 		if (atual == null) {
-			return;
+			throw new IllegalArgumentException();
 		} else {
 			if (atual.getChave() > k) {
 				removerAVL(atual.getEsquerda(), k);
@@ -81,7 +113,6 @@ public class ArvoreAvl {
 		if (aRemover.getEsquerda() == null || aRemover.getDireita() == null) {
 			if (aRemover.getPai() == null) {
 				this.raiz = null;
-				aRemover = null;
 				return;
 			}
 			r = aRemover;
@@ -108,7 +139,6 @@ public class ArvoreAvl {
 			}
 			verificarBalanceamento(r.getPai());
 		}
-		r = null;
 	}
 
 	public No rotacaoEsquerda(No inicial) {
@@ -194,9 +224,12 @@ public class ArvoreAvl {
 			return 1 + Math.max(altura(atual.getEsquerda()), altura(atual.getDireita()));
 		}
 	}
+	public int getAltura() {
+		return altura(raiz);
+	}
 
 	// FIZ DAQUI  -----------------------------------------------------------------------------------------------------
-	private boolean isEmpty(){  
+	private boolean isEmpty(){
 		if (altura(raiz) == -1){
 			return true;
 		}else{
@@ -204,7 +237,7 @@ public class ArvoreAvl {
 		}
 	}
 
-	private No getParent(No n){ 
+	private No getParent(No n){
 		return n.getPai();
 	}
 
@@ -308,7 +341,7 @@ public class ArvoreAvl {
     // Versoes online do GraphViz pode ser encontradas em
     // http://www.webgraphviz.com/
     // http://viz-js.com/
-    // https://dreampuf.github.io/GraphvizOnline 
+    // https://dreampuf.github.io/GraphvizOnline
     public void GeraDOT() {
         System.out.println("digraph g { \nnode [shape = record,height=.1];\n" + "\n");
 
@@ -317,7 +350,7 @@ public class ArvoreAvl {
         GeraConexoesDOT(raiz);
         System.out.println("}" + "\n");
     }
-    
+
 	// ATÉ AQUI ------------------------------------------------------------------------------------------
 
 	private void setBalanceamento(No no) {
