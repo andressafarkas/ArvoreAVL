@@ -36,9 +36,35 @@ public class ArvoreAvl {
 		}
 	}
 
+	public ArvoreAvl clone(){
+	    return cloneAux(raiz);
+    }
+
+
+	private ArvoreAvl cloneAux(No node){
+		ArvoreAvl clone = new ArvoreAvl();
+		if(node == null){
+			return null;
+		}
+		else{
+			clone.inserirNode(node);
+			if(node.getEsquerda() != null){
+				cloneAux(node.getEsquerda());
+			}
+			if(node.getDireita() != null){
+				cloneAux(node.getDireita());
+			}
+		}
+		return clone;
+	}
+
   	public void inserir(int k) {
 		No n = new No(k);
 		inserirAVL(this.raiz, n);
+	}
+
+	public void inserirNode(No node){
+		inserirAVL(this.raiz, node);
 	}
 
 	public void inserirAVL(No aComparar, No aInserir) {
