@@ -91,16 +91,16 @@ public class ArvoreAvl {
 			return false;
 		}
 		else{
-			if(node.getEsquerda() != null && outraArvoreNode.getEsquerda() == null){
+			if(node.getEsquerda() != null && outraArvoreNode.getDireita() == null){
                 return false;
             }
-			if(node.getDireita() != null && outraArvoreNode.getDireita() == null){
+			if(node.getDireita() != null && outraArvoreNode.getEsquerda() == null){
 				return false;
 			}
 			if(node.getEsquerda() == null && outraArvoreNode.getDireita() != null){
 				return false;
 			}
-			if(node.getDireita() == null && outraArvoreNode.getDireita() != null){
+			if(node.getDireita() == null && outraArvoreNode.getEsquerda() != null){
 				return false;
 			}
 			else{
