@@ -82,6 +82,35 @@ public class ArvoreAvl {
 		return false;
 	}
 
+	public boolean isMirror(ArvoreAvl outraArvore){
+		return isMirrorAux(raiz, outraArvore, outraArvore.raiz);
+	}
+
+	private boolean isMirrorAux(No node, ArvoreAvl outraArvore, No outraArvoreNode){
+		if(node == null || outraArvore == null){
+			return false;
+		}
+		else{
+			if(node.getEsquerda() != null && outraArvoreNode.getEsquerda() == null){
+                return false;
+            }
+			if(node.getDireita() != null && outraArvoreNode.getDireita() == null){
+				return false;
+			}
+			if(node.getEsquerda() == null && outraArvoreNode.getDireita() != null){
+				return false;
+			}
+			if(node.getDireita() == null && outraArvoreNode.getDireita() != null){
+				return false;
+			}
+			else{
+				isMirrorAux(node.getEsquerda(), outraArvore, outraArvoreNode.getEsquerda());
+				isMirrorAux(node.getDireita(), outraArvore, outraArvoreNode.getDireita());
+			}
+		}
+		return true;
+	}
+
   	public void inserir(int k) {
 		No n = new No(k);
 		inserirAVL(this.raiz, n);
