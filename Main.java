@@ -38,5 +38,8 @@ public class Main {
         ArvoreAvl clone = arvore.clone();
         clone.GeraDOT();
 
+        System.out.println("contains 5? : " + clone.contains(5));
+        System.out.println("contains 12? : " + clone.contains(12));
+
     }
 }

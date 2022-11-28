@@ -58,6 +58,30 @@ public class ArvoreAvl {
 		return clone;
 	}
 
+	public boolean contains(Integer element){
+		return containsAux(raiz, element);
+	}
+
+	private boolean containsAux(No node, Integer element){
+		if(node == null){
+			return false;
+		}
+		else{
+			if(node.getChave() == element){
+				return true;
+			}
+			else{
+				if(element > node.getChave() && node.getDireita() != null){
+					return containsAux(node.getDireita(), element);
+				}
+				if(element < node.getChave() && node.getEsquerda() != null){
+					return containsAux(node.getEsquerda(), element);
+				}
+			}
+		}
+		return false;
+	}
+
   	public void inserir(int k) {
 		No n = new No(k);
 		inserirAVL(this.raiz, n);
